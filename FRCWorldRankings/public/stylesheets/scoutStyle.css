@@ -1,0 +1,40 @@
+.orange-color {
+    color: yellow;
+}
+
+span {
+    margin-left: .5em;
+}
+
+html {
+    background: black;
+    color: lime;
+}
+
+body {
+    background: black;
+    color: lime;
+    font-size: 1.5em;
+}
+
+span {
+    color: lime;
+}
+
+h1 {
+    color: deepskyblue;
+}
+
+input {
+    font-size: 1.5em;
+}
+
+input[type=radio] {
+    width: .75em;
+    height: .75em;
+}
+
+input[type=checkbox] {
+    width: .75em;
+    height: .75em;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/my-styles.css">
+    <script src="/public/javascripts/socketIO.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        var socket = io();
+
+        var rowData = [];
+
+        socket.on('connection', function(){
+            console.log("We are connected!");
+        });
+
+        socket.on('greet', function(data) {
+            console.log(data);
+        });
+
+        socket.on('data', function(data) {
+            console.log("Got data");
+            //console.log(data);
+
+            //document.getElementById("dataDiv").innerHTML = data;
+        });
+
+        socket.on('worlddata', function(data) {
+            console.log("Got data");
+
+            rowData = data;
+
+            var indSizes = [];
+
+            console.log("Lengths: ");
+            for (var x = 0; x < rowData.length; x++){
+                console.log(rowData[x].length);
+                indSizes.push(rowData[x].length);
+            }
+
+            maxRows = Math.max.apply(Math, indSizes);
+
+            enableLoading();
+        });
+
+        var emitMessage = function(msg){
+            socket.emit('message', msg);
+        };
+
+        var requestData = function(msg){
+            socket.emit('getdata', msg);
+        };
+
+        var requestWorldData = function(msg){
+            socket.emit('getworlddata', msg);
+        };
+
+        window.onbeforeunload = function(e) {
+            socket.close();
+            return null;
+        };
+
+        var rowCount = 0;
+        var table;
+        var myParam = 256;
+        var maxRows = 0;
+
+        function filterText(id){
+            var val = document.getElementById(id).value;
+
+            try {
+                val = val.replace(/\D/g,'');
+            } catch (e){
+                val = 0;
+            }
+
+            document.getElementById(id).value = val;
+        }
+
+        function modCount(id){
+            var val = document.getElementById(id).value;
+
+            try {
+                val = val.replace(/\D/g,'');
+            } catch (e){
+                val = 0;
+            }
+
+            document.getElementById(id).value = val;
+
+            if (val === 0){
+                val = 256;
+            }
+
+            myParam = val;
+
+            rowCount = 0;
+
+            enableLoading();
+        }
+
+        function tableBuilder(dat){
+            var d = JSON.parse(JSON.stringify(dat));
+            console.log("In table builder");
+            var hasData = ["1", "1", "1", "1", "1", "1", "1"];
+            var tmp = [];
+            var keepProcessing = true;
+
+            table = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+
+            while (table.firstChild){
+                table.removeChild(table.firstChild);
+            }
+
+            while (keepProcessing === true){
+                tmp = [];
+
+                if (hasData[0] === "1" && d[0] != 'undefined' && d[0].length > 0){
+                    tmp.push(d[0].shift());
+                } else { tmp.push(['','','','']); if (hasData[0] !== "0") { hasData[0] = "0"; } }
+
+                if (hasData[1] === "1" && d[1] !== 'undefined' && d[1].length > 0){
+                    tmp.push(d[1][0]); d[1].shift();
+                } else { tmp.push(['','','','']); if (hasData[1] !== "0") { hasData[1] = "0"; } }
+
+                if (hasData[2] === "1" && d[2] !== 'undefined' && d[2].length > 0){
+                    tmp.push(d[2][0]); d[2].shift();
+                } else { tmp.push(['','','','']); if (hasData[2] !== "0") { hasData[2] = "0"; } }
+
+                if (hasData[3] === "1" && d[3] !== 'undefined' && d[3].length > 0){
+                    tmp.push(d[3][0]); d[3].shift();
+                } else { tmp.push(['','','','']); if (hasData[3] !== "0") { hasData[3] = "0"; } }
+
+                if (hasData[4] === "1" && d[4] !== 'undefined' && d[4].length > 0){
+                    tmp.push(d[4][0]); d[4].shift();
+                } else { tmp.push(['','','','']); if (hasData[4] !== "0") { hasData[4] = "0"; } }
+
+                if (hasData[5] === "1" && d[5] !== 'undefined' && d[5].length > 0){
+                    tmp.push(d[5][0]); d[5].shift();
+                } else { tmp.push(['','','','']); if (hasData[5] !== "0") { hasData[5] = "0"; } }
+
+                if (hasData[6] === "1" && d[6] !== 'undefined' && d[6].length > 0){
+                    tmp.push(d[6][0]); d[6].shift();
+                } else { tmp.push(['','','','']); if (hasData[6] !== "0") { hasData[6] = "0"; } }
+
+                if (hasData.indexOf("1") != -1 && document.getElementById('data-body').getElementsByTagName('tr').length < myParam) {
+                    rowBuilder(tmp, table);
+                } else {
+                    keepProcessing = false;
+                }
+            }
+
+            disableLoading(myParam, rowData[6].length);
+        }
+
+        function enableLoading(){
+            setTimeout(function(){
+                document.getElementById("loading-ind").innerText = " Loading Data...";
+            },1);
+            console.log("Allowing display");
+//            document.getElementById("loading-ind").classList.remove("hidden");
+//            document.getElementById("loading-ind").classList.add("showing");
+
+            setTimeout(function(){
+                tableBuilder(rowData);
+            },50);
+        }
+
+        function disableLoading(requested, total){
+            console.log("Not allowing display");
+            setTimeout(function(){
+                document.getElementById("loading-ind").innerText = "";
+                var front = Math.min(requested, total);
+                document.getElementById("loading-ind").innerText = "Showing " + front + " of " + total + " rankings.";
+            },1);
+//            document.getElementById("loading-ind").classList.remove("showing");
+//            document.getElementById("loading-ind").classList.add("hidden");
+        }
+
+        function rowBuilder(dat, t){
+            rowCount ++;
+            var cell;
+            var r = t.insertRow(-1);
+
+            cell = r.insertCell(0);
+            cell.innerHTML = rowCount;
+
+            for (var c = 0; c < dat.length; c++){
+                cell = r.insertCell(-1);
+                cell.innerHTML = dat[c][0];
+                cell = r.insertCell(-1);
+                cell.innerHTML = dat[c][3];
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="filter-container">
+        <span class="pad-bottom">Display Count:
+            <input id="display-count" onblur="filterText('display-count')" type="text" value="256">
+            <button class="un-black-button" onclick="modCount('display-count')">Refresh</button>
+        </span>
+        <span id="loading-ind"></span>
+    </div>
+    <div class="hint-text">
+        <span>To search for a specific team: (PC) CTRL + F. (Mac) Command + F. (Android/tablet) Menu -> Find in Page. (iPhone/tablet) Search Field. </span>
+    </div>
+    <div id="data-container">
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th class="no-style"></th>
+                    <th colspan="2" class="style-head bigger">Autonomous</th>
+                    <th colspan="2" class="style-head bigger">Container</th>
+                    <th colspan="2" class="style-head bigger">Coopertition</th>
+                    <th colspan="2" class="style-head bigger">Litter</th>
+                    <th colspan="2" class="style-head bigger">Tote</th>
+                    <th colspan="2" class="style-head bigger">Overall (No Coop)</th>
+                    <th colspan="2" class="style-head bigger">Total Score</th>
+                </tr>
+                <tr>
+                    <th class="style-head no-right smaller">Rank</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                    <th class="style-head sub-row">Team</th><th class="style-head sub-row">Avg</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        requestWorldData('2015');
+    </script>
+</body>
+</html>

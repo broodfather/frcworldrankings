@@ -1,0 +1,177 @@
+
+.col-xs-1 {
+    padding: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    border: 1px solid blue;
+    border-radius: 7px;
+}
+
+#mithril-stuff {
+    margin-top: 2em;
+}
+
+.top-buffer {
+    padding: 1em;
+
+}
+
+.bigger-font {
+    font-size: 1.5em;
+}
+
+.border-please {
+    border: 1px solid black;
+    margin: .1em;
+}
+
+body {
+    padding-bottom: 5em;
+}
+
+.no-border {
+    border: none !important;
+}
+
+#scores_plot_div {
+    width: 600px;
+    height: 600px;
+    max-width: 600px;
+    max-height: 600px;
+}
+
+#scores_above_average_pie_div {
+    width: 600px;
+    height: 600px;
+    max-width: 600px;
+    max-height: 600px;
+}
+
+#three_above_average_pie_div {
+    width: 600px;
+    height: 600px;
+    max-width: 600px;
+    max-height: 600px;
+}
+
+#sankey_basic {
+    width: 800px;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+}
+
+#data-table {
+    border: 1px solid deepskyblue;
+    border-collapse: collapse;
+}
+
+#data-table thead {
+    border: 0;
+}
+
+#data-table .no-style {
+    border: 0;
+    padding: 0;
+}
+
+#data-table .style-head {
+    border: 0;
+    border-right: 1px solid deepskyblue;
+    font-style: normal;
+    color: skyblue;
+
+}
+
+#data-table .sub-row {
+    width: 3em;
+    min-width: 3em;
+    max-width: 3em;
+    border: 0;
+}
+
+#data-table .sub-row:nth-child(odd) {
+    border-right: 1px solid deepskyblue;
+}
+
+#data-table tbody {
+    border: 1px solid deepskyblue;
+}
+
+#data-table .no-right {
+    border-right: 0;
+    padding: 0;
+}
+
+#data-table tbody {
+    color: white;
+}
+
+#data-table td {
+    text-align: center;
+    font-weight: 700;
+    color: hotpink;
+    border: 1px solid deepskyblue;
+}
+
+#data-table td:nth-child(1) {
+    color: orangered;
+}
+
+#data-table td:nth-child(even) {
+    color: limegreen;
+}
+
+#data-table .bigger {
+    font-weight: 900;
+    font-size: 1.1em;
+    padding: .5em;
+}
+
+#data-table .smaller {
+    font-weight: 900;
+    font-size: 1.1em;
+    padding: .5em;
+    width: 1.5em;
+}
+
+body {
+    background-color: black;
+}
+
+span {
+    color: deepskyblue;
+}
+
+#display-count {
+    width: 4em;
+    background-color: lightskyblue;
+    border: 0;
+}
+
+.un-black-button {
+    background-color: deepskyblue;
+    color: black;
+}
+
+#filter-container {
+    padding: 1em;
+}
+
+#loading-ind {
+    color: white;
+    padding: 1em;
+}
+
+.hidden {
+    display: none;
+}
+
+.showing {
+    display: block;
+}
+
+.hint-text {
+    padding-left: 2em;
+    padding-bottom: 1em;
+}

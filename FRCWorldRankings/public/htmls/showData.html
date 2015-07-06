@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hiiii</title>
+
+    <!-- style includes -->
+    <link rel="stylesheet" href="/client-side/styles/my-styles.css">
+    <link rel="stylesheet" href="/client-side/styles/bootstrap.min.css">
+
+    <!-- script includes -->
+    <script src="/client-side/javascripts/mithril.js"></script>
+    <script src="/client-side/javascripts/matchesData.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">FRC Statistical Pages</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#mithril-stuff">World</a></li>
+                    <li><a href="#">Event</a></li>
+                    <li><a href="#">Match</a></li>
+                    <li><a href="#">Team</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="mithril-stuff"></div>
+    <div id="scores_plot_div"></div>
+    <div id="three_above_average_pie_div"></div>
+    <div id="scores_above_average_pie_div"></div>
+    <div class="row">
+        <div class="col-xs-1 no-border"></div>
+        <div id="sankey_basic" class="col-xs-3"></div>
+    </div>
+
+    <br><br><br>
+    <div id="selector_div"></div>
+
+    <script src="/client-side/javascripts/mithrilController.js"></script>
+    <script src="/client-side/javascripts/mithrilViewRouting.js"></script>
+</body>
+</html>
